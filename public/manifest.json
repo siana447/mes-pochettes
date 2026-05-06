@@ -1,0 +1,17 @@
+{
+  "name": "Mes Pochettes — Budget",
+  "short_name": "Mes Pochettes",
+  "description": "Gestion de budget par pochettes avec objectifs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#1a6cf5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='40' fill='%231a6cf5'/><text y='130' x='96' text-anchor='middle' font-size='110'>💰</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}
