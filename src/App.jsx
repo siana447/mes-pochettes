@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, onSnapshot } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD9anW9kITpxP76k7f8k6F7QRkMIjAzCw4",
@@ -131,21 +131,19 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const snap = await getDoc(doc(db, "users", USER_ID));
-        if (snap.exists()) {
-          const data = snap.data();
-          if (data.pochettes) setPochettes(data.pochettes);
-          if (data.budget) setBudget(data.budget);
-        }
-      } catch (e) {
-        console.error("Erreur chargement:", e);
+useEffect(() => {
+    const unsub = onSnapshot(doc(db, "users", USER_ID), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        if (data.pochettes) setPochettes(data.pochettes);
+        if (data.budget) setBudget(data.budget);
       }
       setLoading(false);
-    }
-    load();
+    }, (e) => {
+      console.error("Erreur:", e);
+      setLoading(false);
+    });
+    return () => unsub();
   }, []);
 
   async function save(newPochettes, newBudget) {
